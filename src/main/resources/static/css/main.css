@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+html, body {
+    width: 100%;
+    height: 100vh;
+    background-color: #eeeeee;
+}
+fieldset {
+    width: 400px;
+    background-color: #ffffff;
+}
+
+input {
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 100%;
+}
