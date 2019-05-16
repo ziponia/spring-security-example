@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block layout:fragment="navigation">
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li><a th:href="@{/}">홈</a></li>
+            <li><a th:href="@{/admin}">관리자 페이지</a></li>
+            <li><a th:href="@{/private}">개인 페이지</a></li>
+            <li><a th:href="@{/login(logout)}">로그아웃</a></li>
+        </ul>
+    </nav>
+</th:block>
+
+</html>

@@ -37,6 +37,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         GrantedAuthority role = new SimpleGrantedAuthority("ROLE_USER");
         authorities.add(role);
 
+        if (s.equals("admin")) {
+            GrantedAuthority adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
+            authorities.add(adminRole);
+        }
+
         return new User(userEntity.getUsername(), userEntity.getPassword(), authorities);
     }
 }

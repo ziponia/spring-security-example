@@ -29,6 +29,16 @@ public class SecurityController {
         return "login";
     }
 
+    @GetMapping(value = "/admin")
+    public String adminPage() {
+        return "admin";
+    }
+
+    @GetMapping(value = "/access_denied")
+    public String access_denied_page() {
+        return "access_denied";
+    }
+
     @GetMapping(value = "/private/context")
     public String privateContextPage(
             @AuthenticationPrincipal Authentication authentication
