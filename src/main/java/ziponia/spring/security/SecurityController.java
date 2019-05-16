@@ -3,8 +3,14 @@ package ziponia.spring.security;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @Controller
 public class SecurityController {
@@ -15,7 +21,8 @@ public class SecurityController {
     }
 
     @GetMapping(value = "/private")
-    public String privatePage() {
+    public String privatePage(Principal principal, Model model) {
+        model.addAttribute("user", principal);
         return "private";
     }
 
@@ -38,6 +45,16 @@ public class SecurityController {
     public String access_denied_page() {
         return "access_denied";
     }
+
+    /*@GetMapping(value = "/logout")
+    public String logoutPage(HttpServletRequest req, HttpServletResponse res) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(req, res, auth);
+        }
+
+        return "redirect:/login";
+    }*/
 
     @GetMapping(value = "/private/context")
     public String privateContextPage(
