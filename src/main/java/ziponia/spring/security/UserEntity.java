@@ -3,10 +3,7 @@ package ziponia.spring.security;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_users")
@@ -21,4 +18,7 @@ public class UserEntity {
     private String username;
 
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private SocialProvider sns;
 }

@@ -22,6 +22,9 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
+import ziponia.spring.security.social.facebook.FacebookPrincipalExtractor;
+import ziponia.spring.security.social.github.GithubPrincipalExtractor;
+import ziponia.spring.security.social.kakao.KakaoPrincipalExtractor;
 
 import javax.servlet.Filter;
 import java.util.ArrayList;
@@ -38,6 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private OAuth2ClientContext auth2ClientContext;
 
+    @Autowired
+    private FacebookPrincipalExtractor facebookPrincipalExtractor;
+
+    @Autowired
+    private KakaoPrincipalExtractor kakaoPrincipalExtractor;
+
+    @Autowired
+    private GithubPrincipalExtractor githubPrincipalExtractor;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         /*auth.inMemoryAuthentication()
@@ -51,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css", "/js");
+        web.ignoring().antMatchers("/css", "/js", "/h2-console/**");
     }
 
     @Override
@@ -94,20 +106,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(ssoFilter(facebook(), "/login/facebook"));
-        filters.add(ssoFilter(github(), "/login/github"));
-        filters.add(ssoFilter(kakao(), "/login/kakao"));
+        filters.add(ssoFilter(facebook(), "/login/facebook", SocialProvider.FACEBOOK));
+        filters.add(ssoFilter(github(), "/login/github", SocialProvider.GITHUB));
+        filters.add(ssoFilter(kakao(), "/login/kakao", SocialProvider.KAKAO));
         filter.setFilters(filters);
         return filter;
     }
 
-    private Filter ssoFilter(ClientResources client, String path) {
+    private Filter ssoFilter(ClientResources client, String path, SocialProvider provider) {
         OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
         OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), auth2ClientContext);
         filter.setRestTemplate(template);
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(
                 client.getResource().getUserInfoUri(), client.getClient().getClientId());
         tokenServices.setRestTemplate(template);
+        if (provider.equals(SocialProvider.FACEBOOK)) {
+            tokenServices.setPrincipalExtractor(facebookPrincipalExtractor);
+        }
+
+        if (provider.equals(SocialProvider.GITHUB)) {
+            tokenServices.setPrincipalExtractor(githubPrincipalExtractor);
+        }
+
+        if (provider.equals(SocialProvider.KAKAO)) {
+            tokenServices.setPrincipalExtractor(kakaoPrincipalExtractor);
+        }
         filter.setTokenServices(tokenServices);
         return filter;
     }
@@ -142,4 +165,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
+
+    /*@Bean
+    public FacebookPrincipalExtractor facebookPrincipalExtractor() {
+        return new FacebookPrincipalExtractor();
+    }
+
+    @Bean
+    public KakaoPrincipalExtractor kakaoPrincipalExtractor() {
+        return new KakaoPrincipalExtractor();
+    }
+
+    @Bean
+    public GithubPrincipalExtractor githubPrincipalExtractor() {
+        return new GithubPrincipalExtractor();
+    }*/
 }

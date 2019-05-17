@@ -1,17 +1,15 @@
 package ziponia.spring.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
-
+@Slf4j
 @Controller
 public class SecurityController {
 
@@ -21,8 +19,16 @@ public class SecurityController {
     }
 
     @GetMapping(value = "/private")
-    public String privatePage(Principal principal, Model model) {
-        model.addAttribute("user", principal);
+    public String privatePage(@AuthenticationPrincipal Authentication authentication, Model model) {
+        boolean isOauth2User = authentication instanceof OAuth2Authentication;
+        model.addAttribute("oauth2User", isOauth2User);
+        if (!isOauth2User) {
+            model.addAttribute("user", authentication);
+        } else {
+            OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
+
+            model.addAttribute("sUser", oAuth2Authentication.getUserAuthentication().getDetails());
+        }
         return "private";
     }
 
