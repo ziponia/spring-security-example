@@ -50,6 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private GithubPrincipalExtractor githubPrincipalExtractor;
 
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         /*auth.inMemoryAuthentication()
@@ -74,11 +77,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .anyRequest().permitAll()
         .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/login?expire=true")
+        .and()
+        .and()
+                .rememberMe()
+                .alwaysRemember(false)
+                .rememberMeParameter("remember-me") // 기본 파라메터
+        .and()
             .formLogin()
             .loginPage("/login")
             .usernameParameter("username")
             .passwordParameter("password")
             .failureUrl("/login?error=true")
+            .successHandler(loginSuccessHandler)
         .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
@@ -88,6 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
                 // .accessDeniedPage("/access_denied")
                 .accessDeniedHandler(customAccessDeniedHandler)
+
         .and()
             .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
         ;
@@ -165,19 +179,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
-
-    /*@Bean
-    public FacebookPrincipalExtractor facebookPrincipalExtractor() {
-        return new FacebookPrincipalExtractor();
-    }
-
-    @Bean
-    public KakaoPrincipalExtractor kakaoPrincipalExtractor() {
-        return new KakaoPrincipalExtractor();
-    }
-
-    @Bean
-    public GithubPrincipalExtractor githubPrincipalExtractor() {
-        return new GithubPrincipalExtractor();
-    }*/
 }

@@ -10,11 +10,17 @@
 </head>
 <body>
 <fieldset>
+    <div th:if="${#request.getParameter('expire')}">
+        새로운 곳에서 로그인 시도되었습니다.
+    </div>
     <legend>로그인</legend>
     <form th:action="@{/login}" th:method="post">
         <input type="text" name="username" placeholder="아이디를 입력 해 주세요."/><br />
         <input type="password" name="password" placeholder="비밀번호를 입력 해 주세요."/><br />
         <button type="submit">로그인</button>
+        <label for="remember-me">
+            자동 로그인 <input type="checkbox" name="remember-me" id="remember-me"/>
+        </label>
     </form>
     <div>
         <a th:href="@{/login/facebook}">페이스북 로그인</a>

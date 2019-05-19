@@ -11,7 +11,7 @@ fieldset {
     background-color: #ffffff;
 }
 
-input {
+input:not([type=checkbox]) {
     padding: 8px;
     width: 100%;
     margin-bottom: 20px;

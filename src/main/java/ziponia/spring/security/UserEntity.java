@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_users")
@@ -21,4 +22,6 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private SocialProvider sns;
+
+    private Date lastLogin;
 }
