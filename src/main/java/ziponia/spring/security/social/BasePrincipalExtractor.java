@@ -3,6 +3,7 @@ package ziponia.spring.security.social;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ziponia.spring.security.SocialProvider;
 import ziponia.spring.security.UserEntity;
@@ -11,7 +12,7 @@ import ziponia.spring.security.UserRepository;
 import java.util.Map;
 import java.util.UUID;
 
-public class BasePrincipalExtractor implements PrincipalExtractor {
+public abstract class BasePrincipalExtractor implements PrincipalExtractor {
 
     @Autowired
     private UserRepository userRepository;
