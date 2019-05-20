@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+        .wrap {
+            width: 100vw;
+            height: 100vh;
+            background-color: #eeeeee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            display: block;
+            width: 600px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>제프의 인증시스템</h1>
+    <form action="#" th:action="@{/oauth/authorize}" th:object="${scopes}" th:method="post">
+        <input type="hidden" name="user_oauth_approval" value="true"/>
+        <h4 th:text="|${#request.getParameter('client_id')} 에서 회원님에 대한 아래와 같은 정보를 요청합니다|"></h4>
+        <div th:each="scope : ${scopes.keySet()}">
+            <label th:for="${scope}" th:text="${scope}">scope.read</label>
+            <input type="checkbox" th:id="${scope}" th:name="${scope}" th:value="true"/>
+        </div>
+        <div>
+            <button type="submit">동의하기</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

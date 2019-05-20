@@ -52,6 +52,11 @@ public class SecurityController {
         return "access_denied";
     }
 
+    @GetMapping(value = "/api/login")
+    public String oauthLogin() {
+        return "oauth_login";
+    }
+
     /*@GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest req, HttpServletResponse res) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <title>Document</title>
+</head>
+<body>
+<fieldset>
+    <legend>제프의 로그인</legend>
+    <form th:action="@{/api/login}" th:method="post">
+        <input type="text" name="username" placeholder="아이디를 입력 해 주세요."/><br />
+        <input type="password" name="password" placeholder="비밀번호를 입력 해 주세요."/><br />
+        <button type="submit">로그인</button>
+    </form>
+</fieldset>
+</body>
+</html>
