@@ -1,6 +1,7 @@
 package ziponia.spring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -120,31 +121,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(ssoFilter(facebook(), "/login/facebook", SocialProvider.FACEBOOK));
-        filters.add(ssoFilter(github(), "/login/github", SocialProvider.GITHUB));
-        filters.add(ssoFilter(kakao(), "/login/kakao", SocialProvider.KAKAO));
+        filters.add(ssoFilter(facebook(), "/login/facebook", facebookPrincipalExtractor));
+        filters.add(ssoFilter(github(), "/login/github", githubPrincipalExtractor));
+        filters.add(ssoFilter(kakao(), "/login/kakao", kakaoPrincipalExtractor));
         filter.setFilters(filters);
         return filter;
     }
 
-    private Filter ssoFilter(ClientResources client, String path, SocialProvider provider) {
+    private Filter ssoFilter(ClientResources client, String path, PrincipalExtractor extractor) {
         OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
         OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), auth2ClientContext);
         filter.setRestTemplate(template);
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(
                 client.getResource().getUserInfoUri(), client.getClient().getClientId());
         tokenServices.setRestTemplate(template);
-        if (provider.equals(SocialProvider.FACEBOOK)) {
-            tokenServices.setPrincipalExtractor(facebookPrincipalExtractor);
-        }
-
-        if (provider.equals(SocialProvider.GITHUB)) {
-            tokenServices.setPrincipalExtractor(githubPrincipalExtractor);
-        }
-
-        if (provider.equals(SocialProvider.KAKAO)) {
-            tokenServices.setPrincipalExtractor(kakaoPrincipalExtractor);
-        }
+        tokenServices.setPrincipalExtractor(extractor);
         filter.setTokenServices(tokenServices);
         return filter;
     }
