@@ -28,6 +28,7 @@ public class AuthorizationServerSecurityConfig extends WebSecurityConfigurerAdap
                 .and()
                 .authorizeRequests()
                 .antMatchers("/oauth/authorize/**").authenticated()
+                .antMatchers("/oauth/token/**").permitAll()
             .and()
                 .formLogin()
                 .loginPage("/api/login");
