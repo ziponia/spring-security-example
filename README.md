@@ -11,3 +11,5 @@
 [부가 옵션 알아보기](https://ziponia.github.io/2019/05/19/spring-boot-security-options/)
 
 [WebSecurity 에 oauth2 끼얹기](https://ziponia.github.io/2019/05/20/spring-boot-oauth2-authorization-server/)
+
+[Client 를 DB 로 관리하기](https://ziponia.github.io/2019/05/22/spring-boot-oauth2-client-with-db/)

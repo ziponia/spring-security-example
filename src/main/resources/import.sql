@@ -1,2 +1,3 @@
 insert into tbl_users (idx, username, password) values (1, 'user', '{bcrypt}$2a$10$Wyc.IrbO.bqraF58565Yde6J6heWdARvbDUKfaQYr9v/IoHcQ1RlK');
 insert into tbl_users (idx, username, password) values (2, 'admin', '{bcrypt}$2a$10$Wyc.IrbO.bqraF58565Yde6J6heWdARvbDUKfaQYr9v/IoHcQ1RlK');
+insert into tbl_oauth_client (idx, authorities, auto_approve, client_id, client_secret, grant_types, redirect_uri, scope, user_entity_idx) values (1, 'CLIENT', false, 'client', '{bcrypt}$2a$10$cxEU57mmmEm9FfhAJBMW7ec9oG4Y5Uq4Os8CfpxoL6TLzxPCCqzXK', 'client_credentials,authorization_code,refresh_token,password', 'http://localhost:4000/api/callback', 'read,basic,profile', 1);
