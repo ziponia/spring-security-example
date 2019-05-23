@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/login").permitAll()
-                .antMatchers("/api/private").hasAnyRole("USER")
+                .antMatchers("/api/private/**").hasAnyRole("USER")
                 .antMatchers("/api/**").hasAuthority("CLIENT")
                 .and()
                 .formLogin()

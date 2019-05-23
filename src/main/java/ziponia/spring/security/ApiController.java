@@ -1,5 +1,6 @@
 package ziponia.spring.security;
 
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,11 @@ public class ApiController {
         model.put("name", "jihoon");
         model.put("nick", "zef");
         return model;
+    }
+
+    @GetMapping(value = "/api/private/token")
+    public OAuth2Authentication privateToken(OAuth2Authentication authentication) {
+        return authentication;
     }
 
 

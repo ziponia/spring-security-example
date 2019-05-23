@@ -34,7 +34,7 @@
     <form action="#" th:action="@{/oauth/authorize}" th:object="${scopes}" th:method="post">
         <input type="hidden" name="user_oauth_approval" value="true"/>
         <h4 th:text="|${#request.getParameter('client_id')} 에서 회원님에 대한 아래와 같은 정보를 요청합니다|"></h4>
-        <div th:each="scope : ${scopes.keySet()}">
+        <div th:each="scope : ${scopes}">
             <label th:for="${scope}" th:text="${scope}">scope.read</label>
             <input type="checkbox" th:id="${scope}" th:name="${scope}" th:value="true"/>
         </div>
@@ -42,6 +42,7 @@
             <button type="submit">동의하기</button>
         </div>
     </form>
+
 </div>
 </body>
 </html>
