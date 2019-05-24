@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
@@ -47,7 +48,8 @@ public class SecurityController {
         return "admin";
     }
 
-    @GetMapping(value = "/access_denied")
+    //@GetMapping(value = "/access_denied")
+    @RequestMapping(value = "/access_denied")
     public String access_denied_page() {
         return "access_denied";
     }

@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+
+<th:block layout:fragment="contents">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/profile}" method="get" class="form-group block">
+                <input type="search" name="username" class="form-control" placeholder="찾으시려는 유저를 검색 해주세요." th:value="${#request.getParameter('username')}">
+            </form>
+        </div>
+    </div>
+
+    <h1 th:if="${#request.getParameter('username') == '' and user == null}">
+        유저를 찾을 수 없습니다.
+    </h1>
+
+    <template th:if="${user != null}" th:remove="tag">
+        <h1 th:inline="text">
+            [[ ${user.nickName} ]] 님 의 프로필 입니다
+        </h1>
+
+        <form action="#" th:object="${user}" th:action="@{/profile/update}" method="post" class="form-group">
+            <input type="hidden" th:field="*{username}"/>
+            <label th:for="${user.nickName}" class="control-label">
+                닉네임
+                <input type="text" th:field="*{nickName}" class="form-control"/>
+            </label>
+            <button type="submit" class="btn btn-primary">수정하기</button>
+        </form>
+    </template>
+</th:block>
+
+</html>

@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -69,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .requestMatchers()
-            .mvcMatchers("/login/**", "/logout/**", "/private/**", "/admin/**", "/")
+            .mvcMatchers("/login/**", "/logout/**", "/private/**", "/admin/**", "/", "/profile/**")
             .and()
             .authorizeRequests()
                 .antMatchers("/private/**").hasAnyRole("USER")
