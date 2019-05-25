@@ -1,5 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<template xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:remove="tag">
 
 <th:block layout:fragment="navigation">
     <nav class="navbar navbar-default">
@@ -8,10 +8,11 @@
             <li><a th:href="@{/admin}">관리자 페이지</a></li>
             <li><a th:href="@{/private}">개인 페이지</a></li>
             <li><a th:href="@{/profile}">유저 검색 페이지</a></li>
+            <li><a th:href="@{/profile/group}">내 그룹 관리</a></li>
             <li><a href="javascript: void(0);" onclick="document.getElementById('logout-form').submit()">로그아웃</a></li>
         </ul>
     </nav>
     <form id="logout-form" th:action="@{/logout}" method="post"></form>
 </th:block>
 
-</html>
+</template>

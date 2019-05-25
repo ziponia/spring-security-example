@@ -1,0 +1,9 @@
+<template xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout" th:remove="tag">
+
+<th:block layout:fragment="contents">
+    <h1>제 그룹은 [[ ${group.groupName} ]] 입니다.</h1>
+</th:block>
+
+</template>

@@ -2,7 +2,6 @@ package ziponia.spring.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,6 +41,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             authorities.add(adminRole);
         }
 
-        return new User(userEntity.getUsername(), userEntity.getPassword(), authorities);
+        return new CustomUserDetail(userEntity.getUsername(), userEntity.getPassword(), authorities, userEntity.getGroup().getIdx());
     }
 }

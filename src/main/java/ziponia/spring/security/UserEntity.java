@@ -26,4 +26,7 @@ public class UserEntity {
     private SocialProvider sns;
 
     private Date lastLogin;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GroupEntity group;
 }
