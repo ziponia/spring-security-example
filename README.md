@@ -17,3 +17,5 @@
 [token 을 Json Web Token(JWT) 타입으로 변경하기](https://ziponia.github.io/2019/05/23/spring-boot-jwt/)
 
 [Spring Security Context Principal Custom](https://ziponia.github.io/2019/05/25/spring-security-custom-principal/)
+
+[AuthenticationManager 를 사용하여, 로그인 프로세스 만들기](https://ziponia.github.io/2019/05/26/spring-security-authenticationmanager/)
