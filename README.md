@@ -21,3 +21,5 @@
 [#10 Spring Security Context Principal Custom](https://ziponia.github.io/2019/05/25/spring-security-custom-principal/)
 
 [#11 AuthenticationManager 를 사용하여, 로그인 프로세스 만들기](https://ziponia.github.io/2019/05/26/spring-security-authenticationmanager/)
+
+[#12 loadClientByClientId Method Call Stack hit 4](https://ziponia.github.io/2019/05/27/spring-security-oauth2-high-performance/)
